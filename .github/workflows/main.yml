@@ -1,0 +1,28 @@
+name: Deploy to Raspberry Pi
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Deploy via SSH
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.PI_HOST }}
+          username: ${{ secrets.PI_USER }}
+          key: ${{ secrets.PI_SSH_KEY }}
+          port: 22
+          source: '.'
+          target: ${{ secrets.PI_APP_PATH }}
+
+      - name: Push code to bare repo on Pi
+        run: |
+          ssh -i deploy_key -o StrictHostKeyChecking=no ${{ secrets.PI_USER }}@${{ secrets.PI_HOST }} \
+            'cd ~/repos/RugbyNLClubCrawl.git && git pull && hooks/post-receive'
