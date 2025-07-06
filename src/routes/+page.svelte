@@ -1,4 +1,4 @@
 <script lang="ts">
 </script>
 
-<div>HELLO WORLD</div>
+<div>DEPLOYED WITH GITHUB ACTIONS!</div>
