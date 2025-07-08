@@ -29,8 +29,5 @@ jobs:
           key: ${{ secrets.PI_SSH_KEY }}
           script: |
             cd /home/pi/LeagueScraper
-            export NVM_DIR="$HOME/.nvm"
-            source "$NVM_DIR/nvm.sh"
-            nvm use 20.19.3
-            forever stop build/index.js || true  # stop if running
-            forever start build/index.js
+            /home/pi/.nvm/versions/node/v20.19.3/bin/forever stop build/index.js || true  # stop if running
+            foreve/home/pi/.nvm/versions/node/v20.19.3/bin/forever start build/index.js
