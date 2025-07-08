@@ -1704,14 +1704,14 @@ const options = {
 		<div class="error">
 			<span class="status">` + status + '</span>\n			<div class="message">\n				<h1>' + message + "</h1>\n			</div>\n		</div>\n	</body>\n</html>\n"
   },
-  version_hash: "32hbwd"
+  version_hash: "lxsafq"
 };
 async function get_hooks() {
   let handle;
   let handleFetch;
   let handleError;
   let init;
-  ({ handle, handleFetch, handleError, init } = await import('./chunks/hooks.server-Xzk28Pm2.js'));
+  ({ handle, handleFetch, handleError, init } = await import('./chunks/hooks.server-DSxamhG-.js'));
   let reroute;
   let transport;
   return {
