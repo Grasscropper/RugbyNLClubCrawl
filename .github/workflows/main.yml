@@ -30,4 +30,4 @@ jobs:
           script: |
             cd /home/pi/LeagueScraper
             /home/pi/.nvm/versions/node/v20.19.3/bin/forever stop build/index.js || true  # stop if running
-            foreve/home/pi/.nvm/versions/node/v20.19.3/bin/forever start build/index.js
+            /home/pi/.nvm/versions/node/v20.19.3/bin/forever start build/index.js
