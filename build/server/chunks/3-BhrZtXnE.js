@@ -1,0 +1,45 @@
+import { D as DataService } from './DataService-CRs-EzgN.js';
+import { e as error } from './index-CvuFLVuQ.js';
+import 'fs';
+import 'path';
+import 'url';
+
+const load = async ({ params, url }) => {
+  try {
+    let search = params.search;
+    let bgColor = url.searchParams.get("bgclr") ?? "#dddddd";
+    let color = url.searchParams.get("clr") ?? "#000000";
+    let homeAwayFilter = url.searchParams.get("hmawfltr") ?? "both";
+    let isWholeWeek = url.searchParams.get("isWholeWeek") === "true";
+    let matches = DataService.GetAllMatches();
+    let date = deriveDate(url);
+    return { search, color, bgColor, matches, homeAwayFilter, isWholeWeek, date };
+  } catch (err) {
+    console.error("❌ Failed during load:", err);
+    throw error(500, "Load failed");
+  }
+};
+function deriveDate(url) {
+  let paramValue = url.searchParams.get("date");
+  if (paramValue == null)
+    return null;
+  if (paramValue === "TODAY")
+    return /* @__PURE__ */ new Date();
+  return new Date(paramValue);
+}
+
+var _page_server_ts = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  load: load
+});
+
+const index = 3;
+let component_cache;
+const component = async () => component_cache ??= (await import('./_page.svelte-DJtFgcpR.js')).default;
+const server_id = "src/routes/matches/[search]/+page.server.ts";
+const imports = ["_app/immutable/nodes/3.9X3fy3TJ.js","_app/immutable/chunks/CWj6FrbW.js","_app/immutable/chunks/C9ZhiaAV.js","_app/immutable/chunks/BJ4INOJk.js","_app/immutable/chunks/plXlA2MH.js","_app/immutable/chunks/C83QrFBb.js","_app/immutable/chunks/DZQqVVzz.js","_app/immutable/chunks/CgdROTyy.js"];
+const stylesheets = ["_app/immutable/assets/3.eJbIr_e2.css"];
+const fonts = [];
+
+export { component, fonts, imports, index, _page_server_ts as server, server_id, stylesheets };
+//# sourceMappingURL=3-BhrZtXnE.js.map
