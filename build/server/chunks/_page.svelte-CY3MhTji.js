@@ -1,4 +1,4 @@
-import { p as push, F as copy_payload, G as assign_payload, n as pop, I as attr, J as maybe_selected, K as bind_props, L as ensure_array_like, M as attr_style, E as escape_html, N as stringify } from './exports-efZeiL2K.js';
+import { p as push, F as copy_payload, G as assign_payload, n as pop, E as escape_html, I as attr, J as maybe_selected, K as bind_props, L as ensure_array_like, M as attr_style, N as stringify } from './exports-efZeiL2K.js';
 import { p as page } from './index3-COZlwscD.js';
 
 function MatchTable($$payload, $$props) {
@@ -160,7 +160,7 @@ function _page($$payload, $$props) {
     } else {
       $$payload2.out += "<!--[!-->";
     }
-    $$payload2.out += `<!--]--> `;
+    $$payload2.out += `<!--]--> <div>${escape_html(filterMatches.length)} matches</div> `;
     MatchTable($$payload2, {
       matches: filteredMatches,
       color,
@@ -179,4 +179,4 @@ function _page($$payload, $$props) {
 }
 
 export { _page as default };
-//# sourceMappingURL=_page.svelte-DJtFgcpR.js.map
+//# sourceMappingURL=_page.svelte-CY3MhTji.js.map

@@ -27,7 +27,7 @@ jobs:
           host: ${{ secrets.PI_HOST }}
           username: ${{ secrets.PI_USER }}
           key: ${{ secrets.PI_SSH_KEY }}
-          script: |
+        script: |
             cd /home/pi/LeagueScraper
-            /home/pi/.nvm/versions/node/v20.19.3/bin/forever stop build/index.js || true  # stop if running
-            /home/pi/.nvm/versions/node/v20.19.3/bin/forever start build/index.js
+            /usr/local/bin/forever stop build/index.js || true  # stop if running
+            /usr/local/bin/forever start build/index.js

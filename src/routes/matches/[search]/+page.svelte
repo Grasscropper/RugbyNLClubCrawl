@@ -62,6 +62,9 @@
   {#if page.url.searchParams.get('hidemenu') !== 'true'}
     <MatchTableEditor bind:bgColor bind:color bind:homeAwayFilter bind:searchString bind:isWholeWeek bind:date />
   {/if}
+  <div>
+    {filterMatches.length} matches
+  </div>
   <MatchTable matches={filteredMatches} {color} {bgColor} {iconFunc} />
 </div>
 
