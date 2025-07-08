@@ -1,0 +1,1 @@
+import"../chunks/CWj6FrbW.js";import"../chunks/DazqCHCy.js";import{b as r,a as t}from"../chunks/DH7zvddy.js";var m=r('<div><a href="./matches">Matches</a></div>');function n(a){var o=m();t(a,o)}export{n as component};
