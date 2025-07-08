@@ -8,7 +8,11 @@ import 'url';
 
 class RugbyNLService {
   async ReadSeasonData() {
-    let browser = await puppeteer.launch();
+    let browser = await puppeteer.launch({
+      executablePath: "/usr/bin/chromium-browser",
+      headless: true,
+      args: ["--no-sandbox", "--disable-setuid-sandbox"]
+    });
     let leagueUrls = await this.GetLeagueUrls(browser);
     let tables = await Promise.all(leagueUrls.map((a_item) => this.ReadMatchTable(a_item, browser)));
     browser.close();
@@ -135,4 +139,4 @@ const handle = async ({ event, resolve }) => {
 };
 
 export { handle };
-//# sourceMappingURL=hooks.server-DSxamhG-.js.map
+//# sourceMappingURL=hooks.server-BLToLlOo.js.map

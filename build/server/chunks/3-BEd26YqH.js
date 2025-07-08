@@ -37,9 +37,9 @@ const index = 3;
 let component_cache;
 const component = async () => component_cache ??= (await import('./_page.svelte-DJtFgcpR.js')).default;
 const server_id = "src/routes/matches/[search]/+page.server.ts";
-const imports = ["_app/immutable/nodes/3.DC3prWPs.js","_app/immutable/chunks/CWj6FrbW.js","_app/immutable/chunks/C9ZhiaAV.js","_app/immutable/chunks/BJ4INOJk.js","_app/immutable/chunks/ofL0tqrI.js","_app/immutable/chunks/36-zbK8S.js","_app/immutable/chunks/DZQqVVzz.js","_app/immutable/chunks/CgdROTyy.js"];
+const imports = ["_app/immutable/nodes/3.Km0WKEr9.js","_app/immutable/chunks/CWj6FrbW.js","_app/immutable/chunks/C9ZhiaAV.js","_app/immutable/chunks/BJ4INOJk.js","_app/immutable/chunks/CHK_XG0u.js","_app/immutable/chunks/zvZldydo.js","_app/immutable/chunks/DZQqVVzz.js","_app/immutable/chunks/CgdROTyy.js"];
 const stylesheets = ["_app/immutable/assets/3.eJbIr_e2.css"];
 const fonts = [];
 
 export { component, fonts, imports, index, _page_server_ts as server, server_id, stylesheets };
-//# sourceMappingURL=3-XoD6Kg1Q.js.map
+//# sourceMappingURL=3-BEd26YqH.js.map
