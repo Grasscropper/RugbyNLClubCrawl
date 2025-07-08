@@ -10,7 +10,7 @@
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-		"deploy": "vite build && git add --all && git commit -am ${npm_config_commit_message} && git push origin main"
+		"deploy": "vite build && git add --all && git commit -am  \"$npm_config_message\" && git push origin main"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-node": "^5.2.12",
