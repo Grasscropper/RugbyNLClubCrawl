@@ -63,7 +63,7 @@
     <MatchTableEditor bind:bgColor bind:color bind:homeAwayFilter bind:searchString bind:isWholeWeek bind:date />
   {/if}
   <div>
-    {filterMatches.length} matches
+    {filterMatches().length} matches
   </div>
   <MatchTable matches={filteredMatches} {color} {bgColor} {iconFunc} />
 </div>

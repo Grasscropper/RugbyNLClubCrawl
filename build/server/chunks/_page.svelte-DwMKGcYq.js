@@ -160,7 +160,7 @@ function _page($$payload, $$props) {
     } else {
       $$payload2.out += "<!--[!-->";
     }
-    $$payload2.out += `<!--]--> <div>${escape_html(filterMatches.length)} matches</div> `;
+    $$payload2.out += `<!--]--> <div>${escape_html(filterMatches().length)} matches</div> `;
     MatchTable($$payload2, {
       matches: filteredMatches,
       color,
@@ -179,4 +179,4 @@ function _page($$payload, $$props) {
 }
 
 export { _page as default };
-//# sourceMappingURL=_page.svelte-CY3MhTji.js.map
+//# sourceMappingURL=_page.svelte-DwMKGcYq.js.map
