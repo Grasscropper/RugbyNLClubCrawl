@@ -91,8 +91,8 @@ function _page($$payload, $$props) {
       console.log(typeof date, date);
       result = result.filter((a_item) => sameDay(a_item.Date, date));
     }
-    if (homeAwayFilter == "home") return result.filter((a_item) => a_item.HomeTeam.startsWith(`${searchString}`));
-    if (homeAwayFilter == "away") return result.filter((a_item) => a_item.AwayTeam.startsWith(`${searchString}`));
+    if (homeAwayFilter == "home") return result.filter((a_item) => isMatchingStringCI(a_item.HomeTeam, searchString));
+    if (homeAwayFilter == "away") return result.filter((a_item) => isMatchingStringCI(a_item.AwayTeam, searchString));
     return result.filter(isTeamMatchingString);
   }
   function isMatchingStringCI(str1, str2) {
@@ -188,4 +188,4 @@ function _page($$payload, $$props) {
 }
 
 export { _page as default };
-//# sourceMappingURL=_page.svelte-Cc5nX_WG.js.map
+//# sourceMappingURL=_page.svelte-B6NoKy4z.js.map

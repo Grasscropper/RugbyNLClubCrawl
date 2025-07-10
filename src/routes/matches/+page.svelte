@@ -32,8 +32,8 @@
       result = result.filter((a_item) => sameDay(a_item.Date, date!));
     }
 
-    if (homeAwayFilter == 'home') return result.filter((a_item) => a_item.HomeTeam.startsWith(`${searchString}`));
-    if (homeAwayFilter == 'away') return result.filter((a_item) => a_item.AwayTeam.startsWith(`${searchString}`));
+    if (homeAwayFilter == 'home') return result.filter((a_item) => isMatchingStringCI(a_item.HomeTeam, searchString));
+    if (homeAwayFilter == 'away') return result.filter((a_item) => isMatchingStringCI(a_item.AwayTeam, searchString));
 
     return result.filter(isTeamMatchingString);
   }
