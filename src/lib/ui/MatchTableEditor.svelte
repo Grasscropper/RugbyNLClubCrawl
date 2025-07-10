@@ -83,10 +83,6 @@
   <div>
     Starts with: <input type="text" bind:value={searchString} onchange={onChangeSearch} />
   </div>
-  <div class="colors">
-    Row color: <input type="color" bind:value={bgColor} onchange={(e) => onChangeBgColor(e.currentTarget.value)} />
-    Text color: <input type="color" bind:value={color} onchange={(e) => onChangeColor(e.currentTarget.value)} />
-  </div>
   <div class="homeaway-container">
     Home/Away:
     <select onchange={onChangeHomeAwayFilter}>
@@ -106,6 +102,10 @@
       disabled={date == null}
     />
     <label for="isWholeWeekCheckbox">Use whole week</label>
+  </div>
+  <div class="colors">
+    Row color: <input type="color" bind:value={bgColor} onchange={(e) => onChangeBgColor(e.currentTarget.value)} />
+    Text color: <input type="color" bind:value={color} onchange={(e) => onChangeColor(e.currentTarget.value)} />
   </div>
   <button onpointerdown={copyLink}>Get viewing link</button>
 </div>

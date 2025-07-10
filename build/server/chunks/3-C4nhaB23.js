@@ -35,11 +35,11 @@ var _page_server_ts = /*#__PURE__*/Object.freeze({
 
 const index = 3;
 let component_cache;
-const component = async () => component_cache ??= (await import('./_page.svelte-B6NoKy4z.js')).default;
+const component = async () => component_cache ??= (await import('./_page.svelte-BPocHBpK.js')).default;
 const server_id = "src/routes/matches/+page.server.ts";
-const imports = ["_app/immutable/nodes/3.ChnvYeW8.js","_app/immutable/chunks/CWj6FrbW.js","_app/immutable/chunks/DH7zvddy.js","_app/immutable/chunks/BOIzqSA3.js","_app/immutable/chunks/BCe7NVrf.js","_app/immutable/chunks/qvmD8DIL.js","_app/immutable/chunks/BqqA2Yp1.js","_app/immutable/chunks/CS3cXRBn.js"];
+const imports = ["_app/immutable/nodes/3.CcZYuGzx.js","_app/immutable/chunks/CWj6FrbW.js","_app/immutable/chunks/DH7zvddy.js","_app/immutable/chunks/BOIzqSA3.js","_app/immutable/chunks/BCe7NVrf.js","_app/immutable/chunks/qvmD8DIL.js","_app/immutable/chunks/CKxup0JH.js","_app/immutable/chunks/BunGzXie.js"];
 const stylesheets = ["_app/immutable/assets/3.eJbIr_e2.css"];
 const fonts = [];
 
 export { component, fonts, imports, index, _page_server_ts as server, server_id, stylesheets };
-//# sourceMappingURL=3-CIMHjCrl.js.map
+//# sourceMappingURL=3-C4nhaB23.js.map
