@@ -29,5 +29,5 @@ jobs:
           key: ${{ secrets.PI_SSH_KEY }}
           script: |
             cd /home/pi/LeagueScraper
-            forever stop build/index.js || true  # stop if running
-            forever start build/index.js
+            forever stop LeagueScraper || true  # stop if running
+            forever start -a -l forever.log -o out.log -e err.log -c node --uid LeagueScraper build/index.js
