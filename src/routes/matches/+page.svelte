@@ -35,20 +35,29 @@
     if (homeAwayFilter == 'home') return result.filter((a_item) => a_item.HomeTeam.startsWith(`${searchString}`));
     if (homeAwayFilter == 'away') return result.filter((a_item) => a_item.AwayTeam.startsWith(`${searchString}`));
 
-    return result.filter(
-      (a_item) => a_item.HomeTeam.startsWith(`${searchString}`) || a_item.AwayTeam.startsWith(`${searchString}`),
-    );
+    return result.filter(isTeamMatchingString);
+  }
+
+  function isMatchingStringCI(str1: string, str2: string): boolean {
+    return str1.toUpperCase().startsWith(str2.toUpperCase());
+  }
+
+  function isTeamMatchingString(match: MatchRow): boolean {
+    return isMatchingStringCI(match.HomeTeam, searchString) || isMatchingStringCI(match.AwayTeam, searchString);
   }
 
   function iconFunc(match: MatchRow): string {
     if (match.Score == null) return '';
 
-    const isHomeTeam = match.HomeTeam.startsWith(`${searchString}`);
+    const isHomeTeam = isMatchingStringCI(match.HomeTeam, searchString);
+    const isAwayTeam = isMatchingStringCI(match.AwayTeam, searchString);
+
+    if (isHomeTeam == isAwayTeam) return '?';
 
     if (isHomeTeam && match.Score.HomeTeam > match.Score.AwayTeam) return '✅';
-    if (!isHomeTeam && match.Score.HomeTeam < match.Score.AwayTeam) return '✅';
-    if (!isHomeTeam && match.Score.HomeTeam > match.Score.AwayTeam) return '❌';
     if (isHomeTeam && match.Score.HomeTeam < match.Score.AwayTeam) return '❌';
+    if (isAwayTeam && match.Score.HomeTeam < match.Score.AwayTeam) return '✅';
+    if (isAwayTeam && match.Score.HomeTeam > match.Score.AwayTeam) return '❌';
 
     return '=';
   }

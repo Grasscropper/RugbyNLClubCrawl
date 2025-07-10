@@ -93,15 +93,23 @@ function _page($$payload, $$props) {
     }
     if (homeAwayFilter == "home") return result.filter((a_item) => a_item.HomeTeam.startsWith(`${searchString}`));
     if (homeAwayFilter == "away") return result.filter((a_item) => a_item.AwayTeam.startsWith(`${searchString}`));
-    return result.filter((a_item) => a_item.HomeTeam.startsWith(`${searchString}`) || a_item.AwayTeam.startsWith(`${searchString}`));
+    return result.filter(isTeamMatchingString);
+  }
+  function isMatchingStringCI(str1, str2) {
+    return str1.toUpperCase().startsWith(str2.toUpperCase());
+  }
+  function isTeamMatchingString(match) {
+    return isMatchingStringCI(match.HomeTeam, searchString) || isMatchingStringCI(match.AwayTeam, searchString);
   }
   function iconFunc(match) {
     if (match.Score == null) return "";
-    const isHomeTeam = match.HomeTeam.startsWith(`${searchString}`);
+    const isHomeTeam = isMatchingStringCI(match.HomeTeam, searchString);
+    const isAwayTeam = isMatchingStringCI(match.AwayTeam, searchString);
+    if (isHomeTeam == isAwayTeam) return "?";
     if (isHomeTeam && match.Score.HomeTeam > match.Score.AwayTeam) return "✅";
-    if (!isHomeTeam && match.Score.HomeTeam < match.Score.AwayTeam) return "✅";
-    if (!isHomeTeam && match.Score.HomeTeam > match.Score.AwayTeam) return "❌";
     if (isHomeTeam && match.Score.HomeTeam < match.Score.AwayTeam) return "❌";
+    if (isAwayTeam && match.Score.HomeTeam < match.Score.AwayTeam) return "✅";
+    if (isAwayTeam && match.Score.HomeTeam > match.Score.AwayTeam) return "❌";
     return "=";
   }
   function sameDay(d1, d2) {
@@ -180,4 +188,4 @@ function _page($$payload, $$props) {
 }
 
 export { _page as default };
-//# sourceMappingURL=_page.svelte-DTZ722PI.js.map
+//# sourceMappingURL=_page.svelte-Cc5nX_WG.js.map
