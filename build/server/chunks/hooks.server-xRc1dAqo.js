@@ -1,5 +1,5 @@
 import cron from 'node-cron';
-import { D as DataService } from './DataService-CRs-EzgN.js';
+import { D as DataService } from './DataService-k5s8Z4fj.js';
 import * as puppeteer from 'puppeteer';
 import { e as error } from './index-CvuFLVuQ.js';
 import 'fs';
@@ -8,46 +8,62 @@ import 'url';
 
 class RugbyNLService {
   async ReadSeasonData() {
-    let browser = await puppeteer.launch({
+    var isWin = process.platform === "win32";
+    let browser = isWin ? await puppeteer.launch() : await puppeteer.launch({
       executablePath: "/usr/bin/chromium-browser",
       headless: true,
       args: ["--no-sandbox", "--disable-setuid-sandbox"]
     });
-    let leagueUrls = await this.GetLeagueUrls(browser);
-    let tables = await Promise.all(leagueUrls.map((a_item) => this.ReadMatchTable(a_item, browser)));
+    let leaguePartials = await this.GetLeaguePartials(browser);
+    await Promise.all(leaguePartials.map((a_item) => this.FillLeagueData(a_item, browser)));
     browser.close();
-    return tables;
+    return leaguePartials;
   }
-  async GetLeagueUrls(browser) {
+  async GetLeaguePartials(browser) {
     const page = await browser.newPage();
+    await page.exposeFunction("Log", Log);
     await page.goto(s_leagueUrl);
-    const url = await page.evaluate(() => {
+    const mostRecentSeason = await page.evaluate(() => {
       const container = document.getElementById("menu-speelschema");
       const linkElement = container.firstElementChild.firstElementChild;
       return linkElement.href;
     });
-    await page.goto(url);
-    const leagueUrls = await page.evaluate(() => {
+    await page.goto(mostRecentSeason);
+    const leaguePartials = await page.evaluate(() => {
       const container = document.getElementsByClassName("the-content").item(0);
       const accordionElements = [...container.getElementsByClassName("accordion-item")].slice(0, 5);
-      const anchorElements = accordionElements.reduce((acc, cur) => [...acc, ...cur.getElementsByTagName("a")], []);
-      return [...anchorElements].map((a_item) => a_item.href).filter((a_item) => a_item.length > 0);
+      let result = [];
+      for (let accordionElement of accordionElements) {
+        const category = accordionElement.getElementsByClassName("accordion-title")[0].firstChild.textContent;
+        const divisionHeadingElements = accordionElement.querySelectorAll("h6.wp-block-heading");
+        const divisionButtonGroupElements = accordionElement.getElementsByClassName("wp-block-buttons");
+        for (let [index, divisionHeadingElement] of [...divisionHeadingElements].entries()) {
+          const heading = divisionHeadingElement.textContent;
+          const divisionButtonGroupAnchorElements = [...divisionButtonGroupElements[index].querySelectorAll("a:not(.has-white-background-color)")];
+          const partials = divisionButtonGroupAnchorElements.map((a_item) => ({ Name: a_item.textContent, URL: a_item.href, Category: category, Division: heading }));
+          result.push(...partials);
+        }
+      }
+      return result;
     });
-    console.log(leagueUrls);
-    return leagueUrls;
+    console.log(leaguePartials);
+    return leaguePartials;
   }
-  async ReadMatchTable(url, browser) {
+  async FillLeagueData(partial, browser) {
+    if (!partial.URL)
+      return;
     const page = await browser.newPage();
     await page.exposeFunction("ParseDate", ParseDate);
     await page.exposeFunction("ParseScore", ParseScore);
     await page.exposeFunction("Log", Log);
-    await page.goto(url);
-    const tableData = await page.evaluate(async (url2) => {
-      const result = {
-        Url: url2,
-        Matches: []
-      };
+    await page.goto(partial.URL);
+    partial.Ranking = await this.ReadRankingTable(page);
+    partial.Matches = await this.ReadMatchTable(page);
+  }
+  async ReadMatchTable(page) {
+    return page.evaluate(async () => {
       const rows = Array.from(document.querySelectorAll(".results tbody tr"));
+      const matches = [];
       let date = /* @__PURE__ */ new Date();
       for (const row of rows) {
         const columns = Array.from(row.querySelectorAll("td"));
@@ -55,7 +71,7 @@ class RugbyNLService {
           date = await ParseDate(columns[0].textContent ?? "");
         } else if (columns.length == 5 && !row.classList.contains("header")) {
           let parsedScore = await ParseScore(columns[4].textContent);
-          result.Matches.push(
+          matches.push(
             {
               Date: date,
               Time: columns[0].textContent,
@@ -67,9 +83,32 @@ class RugbyNLService {
           );
         }
       }
-      return result;
-    }, url);
-    return tableData;
+      return matches;
+    });
+  }
+  async ReadRankingTable(page) {
+    return page.evaluate(async () => {
+      const rows = Array.from(document.querySelectorAll("#team-ranking tbody tr:not(.header)"));
+      const rankings = [];
+      for (const row of rows) {
+        const columns = Array.from(row.querySelectorAll("td"));
+        rankings.push(
+          {
+            Rank: parseInt(columns[0].textContent),
+            TeamName: columns[1].textContent,
+            MatchesPlayed: parseInt(columns[2].textContent),
+            Wins: parseInt(columns[3].textContent),
+            Losses: parseInt(columns[4].textContent),
+            Draws: parseInt(columns[5].textContent),
+            CompetitionPoints: parseInt(columns[6].textContent),
+            PointsScored: parseInt(columns[7].textContent),
+            PointsConceded: parseInt(columns[8].textContent),
+            PointsBalance: parseInt(columns[9].textContent)
+          }
+        );
+      }
+      return rankings;
+    });
   }
 }
 async function ParseDate(date) {
@@ -112,8 +151,8 @@ async function runJob() {
   try {
     console.log("CRON job started");
     let rugbyNL = new RugbyNLService();
-    let matchTables = await rugbyNL.ReadSeasonData();
-    DataService.UpdateMatchData(matchTables);
+    let leagues = await rugbyNL.ReadSeasonData();
+    DataService.UpdateLeagueData(leagues);
     console.log("CRON job finished");
   } catch (e) {
     console.error("CRON job error:", e);
@@ -139,4 +178,4 @@ const handle = async ({ event, resolve }) => {
 };
 
 export { handle };
-//# sourceMappingURL=hooks.server-BLToLlOo.js.map
+//# sourceMappingURL=hooks.server-xRc1dAqo.js.map

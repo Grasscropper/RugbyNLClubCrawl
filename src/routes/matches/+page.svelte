@@ -6,13 +6,13 @@
   import type { PageProps } from './$types';
 
   let { data }: PageProps = $props();
-  let { matches, search } = data;
+  let { matches } = data;
 
   let bgColor = $state(data.bgColor);
   let color = $state(data.color);
 
   let homeAwayFilter: HomeAwayFilter = $state(data.homeAwayFilter);
-  let searchString: string = $state(`${search}`);
+  let searchString: string = $state(`${data.search}`);
   let isWholeWeek: boolean = $state(data.isWholeWeek);
   let date: Date | null = $state(data.date);
   let filteredMatches = $derived(filterMatches());
@@ -61,10 +61,10 @@
 <div class="container">
   {#if page.url.searchParams.get('hidemenu') !== 'true'}
     <MatchTableEditor bind:bgColor bind:color bind:homeAwayFilter bind:searchString bind:isWholeWeek bind:date />
+    <div>
+      {filteredMatches.length} matches
+    </div>
   {/if}
-  <div>
-    {filterMatches().length} matches
-  </div>
   <MatchTable matches={filteredMatches} {color} {bgColor} {iconFunc} />
 </div>
 

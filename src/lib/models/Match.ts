@@ -13,7 +13,6 @@ export interface Score {
 }
 
 export interface MatchTable {
-    Url: string;
     Matches: MatchRow[];
 }
 

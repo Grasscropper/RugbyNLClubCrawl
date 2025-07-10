@@ -27,6 +27,12 @@
     return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
   });
 
+  function onChangeSearch(e: Event & { currentTarget: EventTarget & HTMLInputElement }) {
+    let value = e.currentTarget.value;
+    page.url.searchParams.set('search', value);
+    goto(`?${page.url.searchParams}`);
+  }
+
   function onChangeBgColor(value: string) {
     page.url.searchParams.set('bgclr', value);
     goto(`?${page.url.searchParams}`);
@@ -66,10 +72,6 @@
     goto(`?${page.url.searchParams}`);
   }
 
-  function onChangeSearchString() {
-    goto(`${searchString}?${page.url.searchParams}`);
-  }
-
   function copyLink() {
     page.url.searchParams.set('hidemenu', 'true');
     const link = page.url.toString();
@@ -79,7 +81,7 @@
 
 <div class="container">
   <div>
-    Starts with: <input type="text" bind:value={searchString} onchange={onChangeSearchString} />
+    Starts with: <input type="text" bind:value={searchString} onchange={onChangeSearch} />
   </div>
   <div class="colors">
     Row color: <input type="color" bind:value={bgColor} onchange={(e) => onChangeBgColor(e.currentTarget.value)} />

@@ -11,8 +11,8 @@ async function runJob() {
         console.log('CRON job started');
 
         let rugbyNL = new RugbyNLService();
-        let matchTables = await rugbyNL.ReadSeasonData();
-        DataService.UpdateMatchData(matchTables);
+        let leagues = await rugbyNL.ReadSeasonData();
+        DataService.UpdateLeagueData(leagues);
 
         console.log('CRON job finished');
     } catch (e) {

@@ -2,9 +2,10 @@ import * as fs from "fs";
 import path from 'path';
 import { fileURLToPath } from 'url';
 import type { MatchRow, MatchTable } from "../models/Match";
+import type { League } from "$lib/models/League";
 
 export class DataService {
-    public static UpdateMatchData(matchTables: MatchTable[]) {
+    public static UpdateLeagueData(matchTables: MatchTable[]) {
         let json = JSON.stringify(matchTables);
 
         // const dirPath = DataService.GetDirPath();
@@ -16,31 +17,33 @@ export class DataService {
         fs.writeFileSync(filePath, json);
     }
 
-    public static GetTeamMatches(teamName: string): MatchRow[] {
-        let allMatches = JSON.parse(fs.readFileSync('static/data/matches.json', 'utf-8')) as MatchTable[];
-        let result = allMatches.reduce((acc, cur) => [...acc, ...cur.Matches], [] as MatchRow[])
-            .filter(a_item => a_item.HomeTeam == teamName || a_item.AwayTeam == teamName);
-        result.forEach(a_item => a_item.Date = new Date(a_item.Date));
+    // public static GetTeamMatches(teamName: string): MatchRow[] {
+    //     let allMatches = JSON.parse(fs.readFileSync('static/data/matches.json', 'utf-8')) as MatchTable[];
+    //     let result = allMatches.reduce((acc, cur) => [...acc, ...cur.Matches], [] as MatchRow[])
+    //         .filter(a_item => a_item.HomeTeam == teamName || a_item.AwayTeam == teamName);
+    //     result.forEach(a_item => a_item.Date = new Date(a_item.Date));
 
-        return result.sort((a, b) => a.Date.getTime() - b.Date.getTime());
-    }
+    //     return result.sort((a, b) => a.Date.getTime() - b.Date.getTime());
+    // }
 
-    public static GetClubMatches(clubName: string): MatchRow[] {
-        let allMatches = JSON.parse(fs.readFileSync('static/data/matches.json', 'utf-8')) as MatchTable[];
-        let matchString = `${clubName} `;
-        let result = allMatches.reduce((acc, cur) => [...acc, ...cur.Matches], [] as MatchRow[])
-            .filter(a_item => a_item.HomeTeam.startsWith(matchString) || a_item.AwayTeam.startsWith(matchString));
-        result.forEach(a_item => a_item.Date = new Date(a_item.Date));
+    // public static GetClubMatches(clubName: string): MatchRow[] {
+    //     let allMatches = JSON.parse(fs.readFileSync('static/data/matches.json', 'utf-8')) as MatchTable[];
+    //     let matchString = `${clubName} `;
+    //     let result = allMatches.reduce((acc, cur) => [...acc, ...cur.Matches], [] as MatchRow[])
+    //         .filter(a_item => a_item.HomeTeam.startsWith(matchString) || a_item.AwayTeam.startsWith(matchString));
+    //     result.forEach(a_item => a_item.Date = new Date(a_item.Date));
 
-        return result.sort((a, b) => a.Date.getTime() - b.Date.getTime());
-    }
+    //     return result.sort((a, b) => a.Date.getTime() - b.Date.getTime());
+    // }
 
     public static GetAllMatches(): MatchRow[] {
         try {
             const filePath = DataService.GetFilePath();
             console.log(filePath)
-            const allMatches = JSON.parse(fs.readFileSync(filePath, 'utf-8'), DataService.JsonReviver) as MatchTable[];
-            const result = allMatches.reduce((acc, cur) => [...acc, ...cur.Matches], [] as MatchRow[]);
+            const leagues = JSON.parse(fs.readFileSync(filePath, 'utf-8'), DataService.JsonReviver) as League[];
+            const result = leagues.reduce((acc, cur) => {
+                return [...acc, ...cur.Matches]
+            }, [] as MatchRow[]);
 
             result.forEach(a_item => {
                 const [hours, minutes] = a_item.Time.split(":").map(Number);

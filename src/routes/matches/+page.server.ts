@@ -1,11 +1,10 @@
 import type { HomeAwayFilter } from '$lib/models/Match';
 import { DataService } from '$lib/server/DataService';
 import { error } from '@sveltejs/kit';
-import type { PageServerLoadEvent } from './$types';
 
-export const load = async ({ params, url }: PageServerLoadEvent) => {
+export const load = async ({ params, url }) => {
     try {
-        let search = params.search;
+        let search = url.searchParams.get('search') ?? "";
         let bgColor = url.searchParams.get('bgclr') ?? '#dddddd';
         let color = url.searchParams.get('clr') ?? '#000000';
         let homeAwayFilter: HomeAwayFilter = url.searchParams.get('hmawfltr') as HomeAwayFilter ?? 'both';

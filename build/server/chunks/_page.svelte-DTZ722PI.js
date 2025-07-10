@@ -71,11 +71,11 @@ function MatchTableEditor($$payload, $$props) {
 function _page($$payload, $$props) {
   push();
   let { data } = $$props;
-  let { matches, search } = data;
+  let { matches } = data;
   let bgColor = data.bgColor;
   let color = data.color;
   let homeAwayFilter = data.homeAwayFilter;
-  let searchString = `${search}`;
+  let searchString = `${data.search}`;
   let isWholeWeek = data.isWholeWeek;
   let date = data.date;
   let filteredMatches = filterMatches();
@@ -157,10 +157,11 @@ function _page($$payload, $$props) {
           $$settled = false;
         }
       });
+      $$payload2.out += `<!----> <div>${escape_html(filteredMatches.length)} matches</div>`;
     } else {
       $$payload2.out += "<!--[!-->";
     }
-    $$payload2.out += `<!--]--> <div>${escape_html(filterMatches().length)} matches</div> `;
+    $$payload2.out += `<!--]--> `;
     MatchTable($$payload2, {
       matches: filteredMatches,
       color,
@@ -179,4 +180,4 @@ function _page($$payload, $$props) {
 }
 
 export { _page as default };
-//# sourceMappingURL=_page.svelte-DwMKGcYq.js.map
+//# sourceMappingURL=_page.svelte-DTZ722PI.js.map
